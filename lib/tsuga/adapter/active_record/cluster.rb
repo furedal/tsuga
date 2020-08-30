@@ -5,6 +5,7 @@ require 'tsuga/adapter/shared/cluster'
 
 module Tsuga::Adapter::ActiveRecord
   module Cluster
+
     def self.included(by)
       by.send :include, Base
       by.send :include, Tsuga::Model::Cluster
@@ -12,7 +13,7 @@ module Tsuga::Adapter::ActiveRecord
       by.extend Scopes
 
       by.class_eval do
-        belongs_to :parent, class_name: by.name
+        belongs_to :parent, optional: true, class_name: by.name
       end
     end
 

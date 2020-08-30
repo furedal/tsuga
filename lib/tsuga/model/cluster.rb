@@ -22,7 +22,7 @@ module Tsuga::Model
   module Cluster
     include Tsuga::Model::PointTrait
     
-    def initialize
+    def initialize(args)
       super
       self.depth   ||= 1
       # equator/greenwich
@@ -66,6 +66,14 @@ module Tsuga::Model
       super(value)
       _update_tilecode
       depth
+    end
+
+    def monocluster?
+      weight == 1
+    end
+  
+    def multicluster?
+      weight > 1
     end
 
 
@@ -132,7 +140,7 @@ module Tsuga::Model
 
 
     def _safe_sqrt(value)
-      (value < 0) ? 0 : Math.sqrt(value)
+      (value.negative?) ? 0 : Math.sqrt(value)
     end
 
 
