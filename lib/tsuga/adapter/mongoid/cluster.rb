@@ -15,7 +15,7 @@ module Tsuga::Adapter::Mongoid
 
     module ScopeMethods
       def at_depth(depth)
-        where(:depth => depth)
+        where(depth: depth)
       end
 
       def in_tile(*tiles)

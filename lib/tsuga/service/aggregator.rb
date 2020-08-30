@@ -23,9 +23,7 @@ module Tsuga::Service
       return if _clusters.empty?
       warn "warning: running aggregation on many clusters (#{_clusters.size})" if _clusters.size > 100
 
-      if DENSITY_BIAS_FACTOR
-        @min_density, @max_density = _clusters.collect(&:density).minmax
-      end
+      @min_density, @max_density = _clusters.map(&:density).minmax if DENSITY_BIAS_FACTOR
 
       # build the set of pairs (n²/2)
       pairs  = []

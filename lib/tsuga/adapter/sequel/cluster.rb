@@ -33,9 +33,7 @@ module Tsuga::Adapter::Sequel
 
       def in_tile(*tiles)
         depths = tiles.map(&:depth).uniq
-        if depths.length > 1
-          raise ArgumentError, 'all tile must be at same depth'
-        end
+        raise ArgumentError, 'all tile must be at same depth' if depths.length > 1
         where(tilecode: tiles.map(&:prefix))
       end
     end

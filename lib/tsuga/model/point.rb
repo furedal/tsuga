@@ -54,11 +54,11 @@ module Tsuga::Model
 
 
     def inspect
-      "<%s lat:%s lng:%s geohash:%s>" % [
+      '<%s lat:%s lng:%s geohash:%s>' % [
         (self.class.name || 'Point').gsub(/.*::/, ''),
-        lat ? ("%.3f" % lat) : 'nil',
-        lng ? ("%.3f" % lng) : 'nil',
-        geohash ? geohash : 'nil'
+        lat ? ('%.3f' % lat) : 'nil',
+        lng ? ('%.3f' % lng) : 'nil',
+        geohash || 'nil'
       ]
     end
 
@@ -79,7 +79,7 @@ module Tsuga::Model
 
 
     def _validate_lat(_lat)
-      raise ArgumentError, 'bad lat' unless ( -90.0 ...  90.0).include?(_lat)
+      raise ArgumentError, 'bad lat' unless ( -90.0 ... 90.0).include?(_lat)
     end
 
     def _validate_lng(_lng)
@@ -111,7 +111,7 @@ module Tsuga::Model
 
       geohash_i = _geohash_to_int(geohash)
       lat,lng = _deinterleave_bits(geohash_i)
-      lat = lat * 180.0 / (1<<32) -  90.0
+      lat = lat * 180.0 / (1<<32) - 90.0
       lng = lng * 360.0 / (1<<32) - 180.0
       self.lat = lat
       self.lng = lng
@@ -128,7 +128,7 @@ module Tsuga::Model
       end
       _validate_lat(lat)
       _validate_lng(lng)
-      normalized_lat = ((lat +  90.0) * (1<<32) / 180.0).to_i
+      normalized_lat = ((lat + 90.0) * (1<<32) / 180.0).to_i
       normalized_lng = ((lng + 180.0) * (1<<32) / 360.0).to_i
 
       geohash_i = _interleave_bits(normalized_lat, normalized_lng)
@@ -139,7 +139,7 @@ module Tsuga::Model
 
     def _interleave_bits(a,b)
       (_interleave_bits_16b(a >> 16,    b >> 16) << 32) |
-      (_interleave_bits_16b(a & 0xffff, b & 0xffff))
+        (_interleave_bits_16b(a & 0xffff, b & 0xffff))
     end
 
 

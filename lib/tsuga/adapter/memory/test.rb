@@ -18,9 +18,10 @@ module Tsuga::Adapter::Memory
 
       def _build_test_models
 
-        OpenStruct.new :clusters => Class.new {
+        OpenStruct.new clusters: Class.new {
           include Tsuga::Adapter::Memory::Cluster 
-        }, :records => Array
+        }, 
+                       records:  Array
       end
     end
   end

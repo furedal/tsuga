@@ -48,13 +48,13 @@ module Tsuga::Adapter::ActiveRecord
         sql = <<-SQL
           INSERT INTO #{quoted_table_name} (#{column_names}) VALUES
         SQL
-        value_template = (["?"] * keys.length).join(', ')
+        value_template = (['?'] * keys.length).join(', ')
         value_strings = attributes.map do |attrs|
           values = keys.map { |k| attrs[k] }
           sanitize_sql_array([value_template, *values])
         end
         full_sql = sql + value_strings.map { |str| "(#{str})"}.join(', ')
-        connection.insert_sql(full_sql)
+        connection.insert(full_sql)
       end
     end
   end

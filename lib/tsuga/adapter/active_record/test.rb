@@ -60,7 +60,7 @@ module Tsuga::Adapter::ActiveRecord
           include Tsuga::Adapter::ActiveRecord::Record
         end
 
-        OpenStruct.new :clusters => cluster_model, :records => record_model
+        OpenStruct.new clusters: cluster_model, records: record_model
       end
 
       class Migration < ActiveRecord::Migration

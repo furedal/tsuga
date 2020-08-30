@@ -20,7 +20,7 @@ module Tsuga::Adapter::Mongoid
 
 
       def _build_test_models
-        ::Mongoid.load!("spec/support/mongoid.yml", :test)
+        ::Mongoid.load!('spec/support/mongoid.yml', :test)
         _cluster_model.create_indexes
         _record_model.create_indexes
 
@@ -28,7 +28,7 @@ module Tsuga::Adapter::Mongoid
         self.const_set :Cluster, _cluster_model
         self.const_set :Record,  _record_model
 
-        OpenStruct.new :clusters => _cluster_model, :records => _record_model
+        OpenStruct.new clusters: _cluster_model, records: _record_model
       end
 
 
@@ -50,7 +50,7 @@ module Tsuga::Adapter::Mongoid
           field :ssq_lng
           field :weight
 
-          store_in :collection => 'clusters'
+          store_in collection: 'clusters'
           index tilecode:1
 
           include Tsuga::Adapter::Mongoid::Cluster
@@ -66,7 +66,7 @@ module Tsuga::Adapter::Mongoid
           field :lat
           field :lng
 
-          store_in :collection => 'records'
+          store_in collection: 'records'
           index geohash:1
 
           include Tsuga::Adapter::Mongoid::Record

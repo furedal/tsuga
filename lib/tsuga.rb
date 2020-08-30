@@ -8,4 +8,4 @@ module Tsuga
   end
 end
 
-require "tsuga/version"
+require 'tsuga/version'

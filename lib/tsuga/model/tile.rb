@@ -27,11 +27,11 @@ module Tsuga::Model
       point.geohash.start_with?(@prefix)
     end
 
-    def dlat(count = 1)
+    def dlat(count=1)
       (northeast.lat - southwest.lat) * (count + WIGGLE_FACTOR)
     end
 
-    def dlng(count = 1)
+    def dlng(count=1)
       (northeast.lng - southwest.lng) * (count + WIGGLE_FACTOR)
     end
 
@@ -47,7 +47,8 @@ module Tsuga::Model
     def neighbour(lat:0, lng:0)
       new_point = Point.new(
         lat: southwest.lat + dlat(lat),
-        lng: southwest.lng + dlng(lng))
+        lng: southwest.lng + dlng(lng)
+      )
       Tile.including(new_point, depth: depth)
     end
 
@@ -64,7 +65,7 @@ module Tsuga::Model
     end
 
     def inspect
-      "<%s depth:%d prefix:%s>" % [
+      '<%s depth:%d prefix:%s>' % [
         (self.class.name || 'Tile'),
         depth, prefix
       ]

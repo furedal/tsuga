@@ -21,11 +21,11 @@ module Tsuga::Adapter::Memory
 
     module ClassMethods
       def at_depth(depth)
-        scoped(lambda { |r| r.depth == depth })
+        scoped(->(r) { r.depth == depth })
       end
 
       def in_tile(*tiles)
-        scoped(lambda { |r| tiles.any? { |t| (t.depth == r.depth) && t.contains?(r) } })
+        scoped(->(r) { tiles.any? { |t| (t.depth == r.depth) && t.contains?(r) } })
       end
     end
   end

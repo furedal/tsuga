@@ -66,7 +66,7 @@ module Tsuga::Adapter::Sequel
           include Tsuga::Adapter::Sequel::Record
         end
 
-        OpenStruct.new :clusters => cluster_model, :records => record_model
+        OpenStruct.new clusters: cluster_model, records: record_model
       end
     end
   end
