@@ -1,5 +1,6 @@
 require 'tsuga'
 require 'tsuga/model/point'
+require 'geokit'
 
 module Tsuga::Model
   # Concretions (provided by adapters) have the following accessors:
@@ -128,6 +129,51 @@ module Tsuga::Model
 
         c.geohash # force geohash calculation
         return c
+      end
+
+      def remove_from_cluster(id)
+        leaf_cluster = where.not(children_type: name).find_by(children_ids: id)
+    
+        return if leaf_cluster.blank?
+    
+        id_of_last_deleted_cluster, closest_multicluster = leaf_cluster.delete_monoclusters
+        if closest_multicluster.present?
+          closest_multicluster.remove_child_cluster(id_of_last_deleted_cluster)
+          closest_multicluster.adjust_cluster_weights_from_here_to_root(-1)
+        end
+      end
+    
+      def get_clusters_for_zoom_and_bounds(zoom, bounds)
+        sw = Tsuga::Point(lat: bounds[:south], lng: bounds[:west])
+        ne = Tsuga::Point(lat: bounds[:north], lng: bounds[:east])
+        return [], false if !is_safe_zoom_for_bounds?(zoom, sw, ne)
+    
+        #See the remarks about depth vs. zoom in the get_zoom_for_children() method
+        clusters = Cluster.in_viewport(sw: sw, ne: ne, depth: zoom)
+        return parsed_clusters(clusters, zoom), true
+      end
+    
+      def get_all_clusters_within_bounds(bounds)
+        sw = Tsuga::Point(lat: bounds[:south], lng: bounds[:west])
+        ne = Tsuga::Point(lat: bounds[:north], lng: bounds[:east])
+        clusters = Cluster.in_viewport(sw: sw, ne: ne, depth: zoom)
+        return parsed_clusters(clusters, nil), true
+      end
+    
+      def is_safe_zoom_for_bounds?(zoom, sw, ne)
+        sw_string = "#{sw.lat},#{sw.lng}"
+        ne_string = "#{ne.lat},#{ne.lng}"
+        distance = Geokit::GeoLoc.distance_between(sw_string, ne_string, {units: :kms})
+        return distance <= 2**(18 - zoom)
+      end
+    
+      def parsed_clusters(clusters, default_zoom)
+        result = []
+        clusters.each_with_index do |cluster, index|
+          zoom = default_zoom || cluster.depth
+          result.push(cluster.parsed_cluster(zoom))
+        end
+        return result
       end
     end
 
