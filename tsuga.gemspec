@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["julien.letessier@gmail.com"]
   spec.description   = %q{Hierarchical Geo Clusterer tuned for Google Maps usage}
   spec.summary       = %q{Hierarchical Geo Clusterer tuned for Google Maps usage}
-  spec.homepage      = "http://github.com/mezis/tsuga"
+  spec.homepage      = "https://github.com/furedal/tsuga"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)
@@ -19,7 +19,7 @@ Gem::Specification.new do |spec|
 
   spec.add_runtime_dependency "ruby-progressbar"
 
-  spec.add_development_dependency "bundler", "~> 1.3"
+  spec.add_development_dependency "bundler", "~> 2.1"
   spec.add_development_dependency "rake"
   spec.add_development_dependency "rspec"
   spec.add_development_dependency "guard"
