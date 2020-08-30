@@ -52,16 +52,6 @@ module Tsuga::Model
       lng
     end
 
-
-    def inspect
-      '<%s lat:%s lng:%s geohash:%s>' % [
-        (self.class.name || 'Point').gsub(/.*::/, ''),
-        lat ? ('%.3f' % lat) : 'nil',
-        lng ? ('%.3f' % lng) : 'nil',
-        geohash || 'nil'
-      ]
-    end
-
     def prefix(depth)
       geohash[0...depth]
     end
