@@ -7,5 +7,3 @@ module Tsuga
     Tsuga::Model::Point.new(*args)
   end
 end
-
-require 'tsuga/version'

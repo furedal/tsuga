@@ -1,11 +1,8 @@
 # coding: utf-8
-lib = File.expand_path('../lib', __FILE__)
-$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'tsuga/version'
 
 Gem::Specification.new do |spec|
   spec.name          = "tsuga"
-  spec.version       = Tsuga::VERSION
+  spec.version       = "0.0.1"
   spec.authors       = ["Julien Letessier"]
   spec.email         = ["julien.letessier@gmail.com"]
   spec.description   = %q{Hierarchical Geo Clusterer tuned for Google Maps usage}
@@ -18,6 +15,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   spec.add_runtime_dependency "ruby-progressbar"
+  spec.add_runtime_dependency "geokit"
 
   spec.add_development_dependency "bundler", "~> 2.1"
   spec.add_development_dependency "rake"
