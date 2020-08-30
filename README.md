@@ -1,9 +1,9 @@
 # Tsuga
 
-[![Build Status](https://travis-ci.org/mezis/tsuga.png?branch=master)](https://travis-ci.org/mezis/tsuga)
+This is based on [Tsuga](https://github.com/mezis/tsuga) by mezis.
+This library is tested using rails 6 and ruby 2.5.7
 
-<img width="320" style="margin-left:1em;margin-bottom:1em;clear:both;float:right;" src="http://cl.ly/image/251X2b1p1B00/b1.jpg"/>
-<img width="320" style="margin-left:1em;margin-bottom:1em;clear:both;float:right;" src="http://cl.ly/image/1T1U421F1P2G/b2.jpg"/>
+## About
 
 A **clustering engine** for geographical data (points of interest) that
 produces a **tree** of clusters, with depths matching zoomlevels on typical
@@ -74,7 +74,7 @@ only useful for testing or extremely small datasets).
 
 Example with [ActiveRecord][active_record]. Create a migration:
 
-    require 'tsuga/adapter/active_record/cluster_migration'
+    require 'tsuga/adapter/active_record/migration'
 
     class AddClusters < ActiveRecord::Migration
       include Tsuga::Adapter::ActiveRecord::Migration
@@ -84,10 +84,10 @@ Example with [ActiveRecord][active_record]. Create a migration:
 And the matching `Cluster` model:
 
     # app/models/cluster.rb
-    require 'tsuga/adapter/active_record/cluster_model'
+    require 'tsuga/adapter/active_record/cluster'
 
     class Cluster < ActiveRecord::Model
-      include Tsuga::Adapter::ActiveRecord::ClusterModel
+      include Tsuga::Adapter::ActiveRecord::Cluster
     end
 
 
@@ -96,10 +96,10 @@ And the matching `Cluster` model:
 Example with [Mongoid][mongoid].
 
     # app/models/cluster.rb
-    require 'tsuga/adapter/mongoid/cluster_model'
+    require 'tsuga/adapter/mongoid/cluster'
 
     class Cluster
-      include Tsuga::Adapter::Mongoid::ClusterModel
+      include Tsuga::Adapter::Mongoid::Cluster
     end
 
 
@@ -108,10 +108,10 @@ Example with [Mongoid][mongoid].
 Example with [Sequel][sequel].
 
     # app/models/cluster.rb
-    require 'tsuga/adapter/sequel/cluster_model'
+    require 'tsuga/adapter/sequel/cluster'
 
     class Cluster < Sequel::Model(:clusters)
-      include Tsuga::Adapter::Sequel::ClusterModel
+      include Tsuga::Adapter::Sequel::Cluster
     end
 
 You will have to provide your own migration, respecting the schema in
@@ -126,6 +126,7 @@ clustering is as simple as:
     require 'tsuga'
     Tsuga::Service::Clusterer.new(source: PointOfInterest, adapter: Cluster).run
 
+Where `PointOfInterest` is a list of records with lat and lng defined.
 This will delete all existing clusters, walk the points of interest, and
 rebuild a tree of clusters.
 
