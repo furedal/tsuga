@@ -103,15 +103,19 @@ module Tsuga::Model
             begin 
               new_tile = first_tile.neighbour(lat:offset_lat, lng:offset_lng)
               tiles << new_tile
+              offset_lng += 1
+
+              # $stderr.puts "%.2f %.2f -> %.2f %.2f" % [new_tile.southwest.lat, new_tile.southwest.lng, new_tile.northeast.lat, new_tile.northeast.lng]
+              # $stderr.flush
+
+              break if tiles.last.northeast.lng >= point_ne.lng
             rescue ArgumentError
-              nil # occurs on world boundaries
+              break
             end
             
-            # $stderr.puts "%.2f %.2f -> %.2f %.2f" % [new_tile.southwest.lat, new_tile.southwest.lng, new_tile.northeast.lat, new_tile.northeast.lng]
-            # $stderr.flush
 
-            offset_lng += 1
-            break if tiles.last.northeast.lng >= point_ne.lng
+
+            
           end
           break if tiles.last.northeast.lat >= point_ne.lat
           offset_lat += 1
