@@ -99,9 +99,14 @@ module Tsuga::Model
           loop do 
             # $stderr.puts("offset: #{offset_lat} #{offset_lng}")
             # $stderr.flush
-            new_tile = first_tile.neighbour(lat:offset_lat, lng:offset_lng)
-            tiles << new_tile
 
+            begin 
+              new_tile = first_tile.neighbour(lat:offset_lat, lng:offset_lng)
+              tiles << new_tile
+            rescue ArgumentError
+              nil # occurs on world boundaries
+            end
+            
             # $stderr.puts "%.2f %.2f -> %.2f %.2f" % [new_tile.southwest.lat, new_tile.southwest.lng, new_tile.northeast.lat, new_tile.northeast.lng]
             # $stderr.flush
 
