@@ -123,7 +123,7 @@ You will have to provide your own migration, respecting the schema in
 The clustering engine is `Tsuga::Service::Clusterer`, and running a full
 clustering is as simple as:
 
-    require 'tsuga'
+    require 'tsuga/service/clusterer'
     Tsuga::Service::Clusterer.new(source: PointOfInterest, adapter: Cluster).run
 
 Where `PointOfInterest` is a list of records with lat and lng defined.
