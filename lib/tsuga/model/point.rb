@@ -69,11 +69,11 @@ module Tsuga::Model
 
 
     def _validate_lat(_lat)
-      raise ArgumentError, 'bad lat' unless ( -90.0 ... 90.0).include?(_lat)
+      raise ArgumentError, 'bad lat' unless _lat.between?(-90.0, 90.0)
     end
 
     def _validate_lng(_lng)
-      raise ArgumentError, 'bad lng' unless (-180.0 ... 180.0).include?(_lng)
+      raise ArgumentError, 'bad lng' unless _lng.between?(-180.0, 180.0)
     end
 
 
