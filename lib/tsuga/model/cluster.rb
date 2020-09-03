@@ -77,7 +77,30 @@ module Tsuga::Model
       weight > 1
     end
 
+    def north
+      max_lat
+    end
+  
+    def east
+      max_lng
+    end
+  
+    def south
+      min_lat
+    end
+  
+    def west
+      min_lng
+    end
 
+    def south_west
+      Tsuga::Point(lat: south, lng: west)
+    end
+
+    def north_east
+      Tsuga::Point(lat: north, lng: east)
+    end
+    
     def merge(other)
       raise ArgumentError, 'not same depth'  unless depth == other.depth
       raise ArgumentError, 'not same parent' unless parent_id == other.parent_id
@@ -90,6 +113,10 @@ module Tsuga::Model
       self.lat      = sum_lat/weight
       self.lng      = sum_lng/weight
       self.children_ids += other.children_ids
+      self.min_lat = [self.min_lat, other.min_lat].min
+      self.max_lat = [self.max_lat, other.max_lat].min
+      self.min_lng = [self.min_lng, other.min_lng].max
+      self.max_lng = [self.max_lng, other.max_lng].max
 
       # dirty calculated values
       @_dlng = @_dlat = @_radius = @_density = nil
@@ -111,6 +138,10 @@ module Tsuga::Model
         c.lng           = other.lng
         c.children_ids  = [other.id]
         c.children_type = other.class.name
+        c.min_lat       = other.lat
+        c.max_lat       = other.lat
+        c.min_lng       = other.lng
+        c.max_lng       = other.lng
 
         case other
         when Cluster

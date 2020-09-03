@@ -22,6 +22,10 @@ module Tsuga::Adapter::ActiveRecord
         t.float   :sum_lng,        limit:53
         t.float   :ssq_lat,        limit:53
         t.float   :ssq_lng,        limit:53
+        t.float   :min_lat,        limit:53
+        t.float   :max_lat,        limit:53
+        t.float   :min_lng,        limit:53
+        t.float   :max_lng,        limit:53
       end
 
       add_index _clusters_table_name, :tilecode, using: :hash

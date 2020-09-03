@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |spec|
   spec.name          = "tsuga"
-  spec.version       = "0.0.2"
+  spec.version       = "0.0.3"
   spec.authors       = ["Julien Letessier"]
   spec.email         = ["julien.letessier@gmail.com"]
   spec.description   = %q{Hierarchical Geo Clusterer tuned for Google Maps usage}
