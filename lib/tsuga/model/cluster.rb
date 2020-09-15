@@ -138,10 +138,6 @@ module Tsuga::Model
         c.lng           = other.lng
         c.children_ids  = [other.id]
         c.children_type = other.class.name
-        c.min_lat       = other.lat
-        c.max_lat       = other.lat
-        c.min_lng       = other.lng
-        c.max_lng       = other.lng
 
         case other
         when Cluster
@@ -150,12 +146,20 @@ module Tsuga::Model
           c.sum_lat     = other.sum_lat
           c.ssq_lng     = other.ssq_lng
           c.ssq_lat     = other.ssq_lat
+          c.min_lat     = other.min_lat
+          c.max_lat     = other.max_lat
+          c.min_lng     = other.min_lng
+          c.max_lng     = other.max_lng
         else
           c.weight      = 1
           c.sum_lng     = other.lng
           c.sum_lat     = other.lat
           c.ssq_lng     = other.lng ** 2
           c.ssq_lat     = other.lat ** 2
+          c.min_lat     = other.lat
+          c.max_lat     = other.lat
+          c.min_lng     = other.lng
+          c.max_lng     = other.lng
         end
 
         c.geohash # force geohash calculation
