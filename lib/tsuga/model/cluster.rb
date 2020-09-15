@@ -114,8 +114,8 @@ module Tsuga::Model
       self.lng      = sum_lng/weight
       self.children_ids += other.children_ids
       self.min_lat = [self.min_lat, other.min_lat].min
-      self.max_lat = [self.max_lat, other.max_lat].min
-      self.min_lng = [self.min_lng, other.min_lng].max
+      self.max_lat = [self.max_lat, other.max_lat].max
+      self.min_lng = [self.min_lng, other.min_lng].min
       self.max_lng = [self.max_lng, other.max_lng].max
 
       # dirty calculated values

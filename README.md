@@ -39,7 +39,7 @@ Yes, Google Maps [does this](https://code.google.com/p/google-maps-utility-libra
 
 Add the `tsuga` gem to your `Gemfile`:
 
-    gem 'tsuga', git: 'https://github.com/furedal/tsuga', tag: '0.0.3'
+    gem 'tsuga', git: 'https://github.com/furedal/tsuga', tag: '0.0.4'
 
 
 # Usage
